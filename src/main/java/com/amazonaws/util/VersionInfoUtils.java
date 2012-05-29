@@ -120,10 +120,27 @@ public class VersionInfoUtils {
 		StringBuilder buffer = new StringBuilder( 1024 );
 		buffer.append( "aws-sdk-" + VersionInfoUtils.getPlatform().toLowerCase() + "/" );
 		buffer.append( VersionInfoUtils.getVersion() );
-		buffer.append( " " );
-		buffer.append( System.getProperty( "os.name" ).replace( ' ', '_' ) + "/" + System.getProperty( "os.version" ).replace( ' ', '_' ) );
-		buffer.append( " " );
-		buffer.append( System.getProperty( "java.vm.name" ).replace( ' ', '_' ) + "/" + System.getProperty( "java.vm.version" ).replace( ' ', '_' ) );
+		
+		String osName = null, osVersion = null;
+		String vmName = null, vmVersion = null; 
+		try {
+			osName = System.getProperty( "os.name" );
+			osVersion = System.getProperty( "os.version" );
+			vmName = System.getProperty( "java.vm.name" );
+			vmVersion = System.getProperty( "java.vm.version" );
+        } 
+		catch (Exception e) {
+            log.info("Error obtaining environment properties to obtain system and version: " + e.getMessage());
+        }
+		
+		if(osName != null && osVersion != null) {
+			buffer.append( " " );
+			buffer.append( osName.replace( ' ', '_' ) + "/" + osVersion.replace( ' ', '_' ) );
+		}
+		if(vmName != null && vmVersion != null) {				
+			buffer.append( " " );
+			buffer.append( vmName.replace( ' ', '_' ) + "/" + vmVersion.replace( ' ', '_' ) );
+		}
 		
 		String region = "";
 		try {
