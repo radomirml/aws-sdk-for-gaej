@@ -1,0 +1,10 @@
+This is an adaptation of AWS SDK for use on Google AppEngine.
+
+Changes made here allow user to provide own HTTP Client Factory implementation. 
+
+An extended HTTP Client Factory class (not included in this library) provides 
+an implementation of HTTPClient that sends requests using GAE's URL Fetch service. 
+
+P.S. I tested this only for the SES service for now. In fact, before the build 
+I deleted locally all other packages I didn't need, which resulted in 10x smaller
+jar file.
